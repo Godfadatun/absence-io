@@ -15,4 +15,4 @@ to generate docs
 ``npm run docs``
 
 to view docs
-go to https://github.com/Godfadatun/urlShortner/blob/master/docs/modules.html
+go to https://github.com/Godfadatun/absence-io/blob/4ab591313a1122062fbac58347d9393140a89bfb/docs/modules.html
