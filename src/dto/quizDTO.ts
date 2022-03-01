@@ -26,3 +26,7 @@ export interface getQuizDTO {
   question_id?: string;
   quiz_id: string;
 }
+
+export interface getAllQuizDTO {
+  user_id: string;
+}

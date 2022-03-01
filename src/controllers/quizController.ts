@@ -3,9 +3,9 @@ import { HydratedDocument } from 'mongoose';
 import { UserModel } from '../database/models/user';
 import { sendObjectResponse, BadRequestException } from '../utils/errors';
 import { theResponse } from '../utils/interface';
-import { createAnswerDTO, createQuestionDTO, createQuizDTO, getQuizDTO } from '../dto/quizDTO';
+import { createAnswerDTO, createQuestionDTO, createQuizDTO, getAllQuizDTO, getQuizDTO } from '../dto/quizDTO';
 import { QuizModel } from '../database/models/quiz';
-import { createAnswerSchema, createQuestionSchema, createQuizSchema, getQuizSchema } from '../authSchema/quizSchema';
+import { createAnswerSchema, createQuestionSchema, createQuizSchema, getAllQuizSchema, getQuizSchema } from '../authSchema/quizSchema';
 import { IQuestion2, IQuiz } from '../database/interfaces/quiz';
 
 /**
@@ -29,7 +29,7 @@ export const createQuizCONTROLLER = async (data: createQuizDTO): Promise<theResp
     const newQuizCreated: HydratedDocument<IQuiz> = new QuizModel({ title, description, user_id: user._id, questions });
     await newQuizCreated.save();
 
-    return sendObjectResponse('New Quiz Created');
+    return sendObjectResponse('New Quiz Created', newQuizCreated);
   } catch (e: any) {
     return BadRequestException(e.message || 'Quiz creation failed, kindly try again', e.data);
   }
@@ -131,5 +131,31 @@ export const getQuizCONTROLLER = async (data: getQuizDTO): Promise<theResponse> 
     return sendObjectResponse(`Quiz retrieved successfully`, quiz);
   } catch (e: any) {
     return BadRequestException(e.message || 'Quiz retrieval failed, kindly try again', e.data);
+  }
+};
+
+/**
+ * A Function that gets all quiz in the DB
+ * @param data this is an object of the [[getAllQuizDTO]] passed in
+ * @returns an error response | a success message using [[theResponse]]
+ * @responses [[BadRequestException]] for Negative Response && [[sendObjectResponse]] for Positive Response
+ * @validation [[getAllQuizSchema]] is used to handle the request validation
+ * @Models [[UserModel]] for the user model, [[QuizModel]] for the quiz model
+ */
+export const getAllQuizCONTROLLER = async (data: getAllQuizDTO): Promise<theResponse> => {
+  const validation = getAllQuizSchema.validate(data);
+  if (validation.error) return BadRequestException(validation.error.message);
+
+  const { user_id } = data;
+  try {
+    const user = await UserModel.findOne({ _id: user_id }).exec();
+    if (!user) throw Error(`user does not exists`);
+
+    const quiz = await QuizModel.find().exec();
+    if (!quiz) throw Error(`No Quiz has been Created`);
+
+    return sendObjectResponse(`All Quiz retrieved successfully`, quiz);
+  } catch (e: any) {
+    return BadRequestException(e.message || 'All Quiz retrieval failed, kindly try again', e.data);
   }
 };

@@ -1,6 +1,16 @@
 import express from 'express';
 import { validateSession } from '../utils/jwt';
-import { answerCreation, answerQuestions, getQuiz, getSolutions, questionCreation, quizCreation, userCreation, userSignIn } from './routes';
+import {
+  answerCreation,
+  answerQuestions,
+  getAllQuiz,
+  getQuiz,
+  getSolutions,
+  questionCreation,
+  quizCreation,
+  userCreation,
+  userSignIn,
+} from './routes';
 
 const router = express.Router();
 
@@ -16,5 +26,6 @@ router.post('/create-answers', answerCreation);
 router.post('/answer-questions', answerQuestions);
 router.get('/get-solutions', getSolutions);
 router.get('/get-quiz', getQuiz);
+router.get('/get-all-quiz', getAllQuiz);
 
 export default router;

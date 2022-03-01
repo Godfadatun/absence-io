@@ -1,9 +1,35 @@
 /* eslint-disable consistent-return */
 import { RequestHandler } from 'express';
-import { createAnswerCONTROLLER, createQuestionCONTROLLER, createQuizCONTROLLER, getQuizCONTROLLER } from '../controllers/quizController';
+import {
+  createAnswerCONTROLLER,
+  createQuestionCONTROLLER,
+  createQuizCONTROLLER,
+  getAllQuizCONTROLLER,
+  getQuizCONTROLLER,
+} from '../controllers/quizController';
 import { answerQuestionsCONTROLLER, getSolutionsCONTROLLER } from '../controllers/solutionController';
 import { createUserCONTROLLER, userSignInCONTROLLER } from '../controllers/userController';
 import logger from '../utils/logger';
+
+/**
+ * A Function that accepts the request from the http protocol to get all the quiz created
+ * @param req this carries the request
+ * @param res this returns the response
+ * @returns a json http status response which can be 200, 400, or 500
+ * @usedFunctions [[getAllQuizCONTROLLER]] for getting all existing Quiz
+ */
+export const getAllQuiz: RequestHandler = async (req, res) => {
+  try {
+    const response = await getAllQuizCONTROLLER({
+      user_id: req.userId,
+    });
+    return res.status(200).json(response);
+  } catch (error: any) {
+    logger.error(error);
+    const responseCode = error.success ? 400 : 500;
+    return res.status(responseCode).json({ success: false, error: error.message || 'Could not fetch Data' });
+  }
+};
 
 /**
  * A Function that accepts the request from the http protocol to get a quiz

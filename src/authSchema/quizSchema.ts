@@ -56,3 +56,7 @@ export const getQuizSchema = joi.object().keys({
   question_id: joi.string().optional(),
   quiz_id: joi.string().required(),
 });
+
+export const getAllQuizSchema = joi.object().keys({
+  user_id: joi.string().required(),
+});

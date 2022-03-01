@@ -29,14 +29,14 @@ const MONGO_USERNAME = process.env.MONGO_USERNAME || 'superuser';
 const MONGO_PASSWORD = process.env.MONGO_PASSWORD || 'superuserpassword1';
 const MONGO_HOST = process.env.MONGO_HOST || 'superuser';
 
-const MONGO = {
+export const MONGO = {
   host: MONGO_HOST,
   username: MONGO_USERNAME,
   password: MONGO_PASSWORD,
   options: MONGO_OPTIONS,
   url: `mongodb+srv://${MONGO_USERNAME}:${MONGO_PASSWORD}@${MONGO_HOST}?w=majority`,
 };
-const NAMESPACE = 'Server';
+export const NAMESPACE = 'Server';
 
 async function startServer(): Promise<void> {
   const app: Application = express();
