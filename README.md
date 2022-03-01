@@ -15,4 +15,6 @@ to generate docs
 ``npm run docs``
 
 to view docs
-go to https://htmlpreview.github.io/?https://github.com/Godfadatun/absence-io/blob/4ab591313a1122062fbac58347d9393140a89bfb/docs/modules.html
+go to [this Link](https://htmlpreview.github.io/?https://github.com/Godfadatun/absence-io/blob/4ab591313a1122062fbac58347d9393140a89bfb/docs/modules.html)
+
+``https://htmlpreview.github.io/?https://github.com/Godfadatun/absence-io/blob/4ab591313a1122062fbac58347d9393140a89bfb/docs/modules.html``
